@@ -72,6 +72,25 @@ def nfs_info():
 
     return jsonify({'df_output': df_output})
 
+@app.route('/vms')
+@basic_auth.required
+def get_vm_info():
+    try:
+        # Obtener la lista de nombres de todas las máquinas virtuales
+        vm_names = subprocess.check_output(['virsh', 'list', '--all', '--name']).decode('utf-8').splitlines()
+
+        vm_info_list = []
+
+        # Iterar sobre cada nombre de máquina virtual y obtener el nombre con virsh dumpxml
+        for vm_name in vm_names:
+            if vm_name.strip():  # Verificar que el nombre no esté vacío o solo contenga espacios
+                nova_name = subprocess.check_output(['virsh', 'dumpxml', vm_name]).decode('utf-8')
+                nova_name = nova_name.split('<nova:name>')[1].split('</nova:name>')[0]
+                vm_info_list.append({'vm_name': vm_name, 'nova_name': nova_name})
+
+        return jsonify({'vms': vm_info_list})
+    except subprocess.CalledProcessError as e:
+        return jsonify({'error': str(e)})
 
 
 if __name__ == '__main__':

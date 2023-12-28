@@ -15,7 +15,7 @@ def status():
     network_info = psutil.net_io_counters()
     boot_time = psutil.boot_time()
 
-    # Construir una respuesta en formato Prometheus
+    # formating Prometheus response
     prometheus_response = (
         f'# HELP memory_usage Percentage of memory usage\n'
         f'# TYPE memory_usage gauge\n'

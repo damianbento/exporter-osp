@@ -17,4 +17,4 @@
    $ pip install -r requirements.txt
 
 6. run app\
-   $ python exporter-ssl.py
+   $ python exporter-basic.py

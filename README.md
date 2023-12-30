@@ -21,6 +21,6 @@
 
 ## For produccion
 
-install gunicorn
-rename exporter-basic.py -> exporter-basic
+install gunicorn\
+rename exporter-basic.py -> exporter-basic\
 run it -> gunicorn -w 1 -b 0.0.0.0:3000 exporte-basic:app
